@@ -52,4 +52,9 @@ public class PlayingCard {
     public int getFace() {
         return face;
     }
+
+
+    public static void main(String[] args) {
+
+    }
 }
