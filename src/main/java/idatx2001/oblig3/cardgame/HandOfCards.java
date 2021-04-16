@@ -6,20 +6,26 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+
+/**
+ * class HandOfCards represents a hand of cards
+ * methods for checking for flush, queen of spades, hearts and sum of faces
+ */
+
 public class HandOfCards {
 
     private ArrayList<PlayingCard> handOfCards;
     private char[] suit = {'H','D','C','S'};
-    Random random = new Random();
 
 
     /**
      * Constructor
+     * deals random cards from the deck
      * @param n cards
      */
     public HandOfCards(int n) {
+        Random random = new Random();
         DeckOfCards deck = new DeckOfCards();
-        this.suit = suit;
         this.handOfCards = new ArrayList<>();
 
         while(handOfCards.size() < n){
@@ -41,7 +47,7 @@ public class HandOfCards {
 
 
     /**
-     * get method
+     * method for getting hand of cards list
      * @return
      */
     public ArrayList<PlayingCard> getHandOfCards(){
@@ -71,7 +77,7 @@ public class HandOfCards {
 
 
     /**
-     *
+     * method for checking for queen of spades
      * @return
      */
     public boolean getQueenOfSpades(){
@@ -80,7 +86,7 @@ public class HandOfCards {
     }
 
     /**
-     *
+     * method for checking for flush
      * @return
      */
     public boolean getFlush(){
