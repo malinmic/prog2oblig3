@@ -1,9 +1,6 @@
 package idatx2001.oblig3.cardgame;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -39,10 +36,10 @@ public class HandOfCards {
 
     /**
      * Constructor
-     * @param cards cards
+     * @param handOfCards cards
      */
-    public HandOfCards(List<PlayingCard> cards){
-        this.handOfCards = new ArrayList<>(cards);
+    public HandOfCards(List<PlayingCard> handOfCards){
+        this.handOfCards = new ArrayList<>(handOfCards);
     }
 
 
@@ -97,6 +94,15 @@ public class HandOfCards {
         return (sameSuitCards == 5);
     }
 
+
+    @Override
+    public String toString(){
+
+        String s = handOfCards.stream().map(Objects::toString).collect(Collectors.joining("      "));
+
+
+        return s;
+    }
 
 
 }

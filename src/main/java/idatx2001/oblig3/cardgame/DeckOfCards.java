@@ -1,6 +1,8 @@
 package idatx2001.oblig3.cardgame;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -10,7 +12,6 @@ import java.util.ArrayList;
 public class DeckOfCards {
 
     private char[] suit = {'H','D','C','S'};
-    private int[] face = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 
     /**
      * arraylist that represents a deck of cards
@@ -87,11 +88,9 @@ public class DeckOfCards {
      */
     @Override
     public String toString(){
-        String s = " ";
 
-        for(int i = 0; i < deckOfCards.size(); i++){
-            s += "\n" + deckOfCards.get(i).toString();
-        }
-        return s;
+       String string = deckOfCards.stream().map(Objects::toString).collect(Collectors.joining("     "));
+
+        return string;
     }
 }

@@ -1,7 +1,7 @@
 package idatx2001.oblig3.cardgame;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
+import javafx.event.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -47,23 +47,25 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         primaryStage.setTitle("Card Game");
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(800);
 
 
         /**
-         * right side of the "table"
+         * buttons
          *
          * buttons to deal cards and chek hand
          */
-        VBox rightSide = new VBox(20);
+        VBox buttons = new VBox(10);
         Button dealHand = new Button("Deal Hand");
         Button checkHand = new Button("Check hand");
-        rightSide.getChildren().addAll(dealHand, checkHand);
+        buttons.getChildren().addAll(dealHand, checkHand);
 
 
         /**
          * cards with hearts info box
          */
-        HBox cardInfoBoxHearts = new HBox(20);
+        HBox cardInfoBoxHearts = new HBox(10);
         cardInfoBoxHearts.setBorder(border);
         cardInfoBoxHearts.setSpacing(15);
         Label cardsWithHearts = new Label("Cards With Hearts: ");
@@ -93,7 +95,7 @@ public class App extends Application {
          */
         HBox cardInfoBoxFlush = new HBox(20);
         cardInfoBoxFlush.setBorder(border);
-        cardInfoBoxFlush.setSpacing(20);
+        cardInfoBoxFlush.setSpacing(15);
         Label cardsFlush = new Label("Flush: ");
         cardInfoBoxFlush.getChildren().addAll(cardsFlush, flushSumResult);
 
@@ -101,18 +103,18 @@ public class App extends Application {
         /**
          * adds all the info boxes to a flow pane
          */
-        FlowPane bottom = new FlowPane();
-        bottom.setVgap(20);
-        bottom.setHgap(25);
-        bottom.getChildren().addAll(cardInfoBoxHearts, cardInfoBoxSumOfFaces, cardInfoBoxQueenOfSpades, cardInfoBoxFlush);
+        FlowPane flowPaneInfoBoxes = new FlowPane();
+        flowPaneInfoBoxes.setVgap(20);
+        flowPaneInfoBoxes.setHgap(25);
+        flowPaneInfoBoxes.getChildren().addAll(cardInfoBoxHearts, cardInfoBoxSumOfFaces, cardInfoBoxQueenOfSpades, cardInfoBoxFlush);
 
 
         /**
-         * left side of "table"
+         * stack pane
          */
-        StackPane leftSide = new StackPane();
-        leftSide.setPadding(new Insets(10, 10, 10, 10));
-        leftSide.setBorder(border);
+        StackPane stackPane = new StackPane();
+        stackPane.setPadding(new Insets(10, 10, 10, 10));
+        stackPane.setBorder(border);
 
         /**
          * grid pane
@@ -121,19 +123,19 @@ public class App extends Application {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(10);
         gridPane.setHgap(4);
-        GridPane.setConstraints(bottom, 0, 15);
-        GridPane.setConstraints(leftSide, 4, 10);
-        GridPane.setConstraints(rightSide, 0, 3);
-        gridPane.getChildren().addAll(bottom, leftSide, rightSide);
+        GridPane.setConstraints(flowPaneInfoBoxes, 0, 15);
+        GridPane.setConstraints(stackPane, 4, 10);
+        GridPane.setConstraints(buttons, 0, 3);
+        gridPane.getChildren().addAll(flowPaneInfoBoxes, stackPane, buttons);
 
 
         /**
          * event handler for handling the event of mouse click on button dealHand
          */
         dealHand.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            leftSide.getChildren().clear();
+            stackPane.getChildren().clear();
             handOfCards = cardDeck.dealHand(10);
-            leftSide.getChildren().add(showCardsMethod(handOfCards));
+            stackPane.getChildren().add(showCardsMethod(handOfCards));
         });
 
         /**
@@ -151,7 +153,7 @@ public class App extends Application {
         /**
          * sets the scene and stage
          */
-        scene = new Scene(leftSide);
+        scene = new Scene(gridPane);
         stage.setScene(scene);
         stage.show();
     }
@@ -244,18 +246,14 @@ public class App extends Application {
      *
      * displays the cards on the screen when the button dealHand is pressed
      * @param handOfCards hand of cards
-     * @return
+     * @return flowpane hand of cards
      */
     public Node showCardsMethod(HandOfCards handOfCards){
 
         FlowPane flowPane = new FlowPane(Orientation.HORIZONTAL);
+        Label handLabel = new Label(handOfCards.toString());
+        flowPane.getChildren().addAll(handLabel);
 
-
-        for(PlayingCard c : handOfCards.getHandOfCards()){
-            Label handLabel = new Label(Character.toString(c.getFace() + c.getSuit()));
-            handLabel.setFont(Font.font(20));
-            flowPane.getChildren().addAll(handLabel);
-        }
 
         return flowPane;
     }
